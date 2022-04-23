@@ -23,87 +23,83 @@ class _LoginState extends State<Login> {
         automaticallyImplyLeading: false,
         title: Text("Connexion"),
       ),
-      body: Center(
-        child: SingleChildScrollView(
-          child: Column(
+      body: Container(
+        padding: EdgeInsets.all(20),
+        child: Center(
+          child: SingleChildScrollView(
+            child: Column(
 
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
 
-              Form(
-                key: _formKey,
-                child: Column(
-                  children: [
-                    //sizedBox(height:10.0),
-                    TextFormField(
-                      controller: _pseudoController,
-                      keyboardType: TextInputType.text,
-                      decoration: InputDecoration(
-                          icon: Icon(Icons.work),
-                          labelText:"Pseudo",
-                          hintText: "Entrez votre pseudo"
+                Form(
+                  key: _formKey,
+                  child: Column(
+                    children: [
+                      //sizedBox(height:10.0),
+                      TextFormField(
+                        controller: _pseudoController,
+                        keyboardType: TextInputType.text,
+                        decoration: InputDecoration(
+                            icon: Icon(Icons.work),
+                            labelText:"Pseudo",
+                            hintText: "Entrez votre pseudo"
+                        ),
+                        validator: (String? value){
+                          return (value == null || value == "")?
+                          "Ce champ est Obligatoire !" : null;
+                        },
                       ),
-                      validator: (String? value){
-                        return (value == null || value == "")?
-                        "Ce champ est Obligatoire !" : null;
-                      },
-                    ),
-                    TextFormField(
-                      controller: _passwordController,
-                      keyboardType: TextInputType.text,
-                      obscureText: true,
-                      decoration: InputDecoration(
-                          icon: Icon(Icons.password),
-                          labelText:"Mot de passe",
-                          hintText: "Votre mot de passe"
+                      TextFormField(
+                        controller: _passwordController,
+                        keyboardType: TextInputType.text,
+                        obscureText: true,
+                        decoration: InputDecoration(
+                            icon: Icon(Icons.password),
+                            labelText:"Mot de passe",
+                            hintText: "Votre mot de passe"
+                        ),
+                        validator: (String? value){
+                          return (value == null || value == "")?
+                          "Ce champ est Obligatoire !" : null;
+                        },
                       ),
-                      validator: (String? value){
-                        return (value == null || value == "")?
-                        "Ce champ est Obligatoire !" : null;
-                      },
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
+                const SizedBox(
+                  height: 40,
+                ),
+                Center(
+                  child: ElevatedButton(onPressed: () async {
+                    if(_formKey.currentState! .validate()){
+                      final pref = await SharedPreferences.getInstance();
 
-              Center(
-                child: ElevatedButton(onPressed: () async {
-                  if(_formKey.currentState! .validate()){
-                    final pref = await SharedPreferences.getInstance();
-
-                    if(pref.getString('pseudo')==_pseudoController.text && pref.getString('password')==_passwordController.text){
-                      pref.setBool('login', true);
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context)=>const Home()),
-                      );
-                    }else{
-                      Fluttertoast.showToast(
-                        msg: "Pseudo ou mot de passe incorrect",
-                        toastLength: Toast.LENGTH_LONG,
-                        gravity: ToastGravity.BOTTOM);
+                      if(pref.getString('pseudo')==_pseudoController.text && pref.getString('password')==_passwordController.text){
+                        pref.setBool('login', true);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context)=>const Home()),
+                        );
+                      }else{
+                        Fluttertoast.showToast(
+                          msg: "Pseudo ou mot de passe incorrect",
+                          toastLength: Toast.LENGTH_LONG,
+                          gravity: ToastGravity.BOTTOM);
+                        }
                       }
-                    }
-                }, child: Text("Se conecter")),
-              ),
-              Center(
-                child: TextButton(onPressed: () async {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context)=>const Register()),
-                  );
-                }, child: Text("J'ai pas un compte")),
-              ),
-              /*Center(
-                child: ElevatedButton(onPressed: (){
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context)=>const InfoPage()),
-                  );
-                }, child: Text("Page Suivante")),
-
-              ),*/
-            ],
+                  }, child: Text("Se conecter")),
+                ),
+                Center(
+                  child: TextButton(onPressed: () async {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context)=>const Register()),
+                    );
+                  }, child: Text("J'ai pas un compte")),
+                ),
+              ],
+            ),
           ),
         ),
       ),

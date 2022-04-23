@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.teal,
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
       routes: <String, WidgetBuilder>{
@@ -38,8 +38,8 @@ class _MyHomePageState extends State<MyHomePage> {
   bool _login = false;
 
   _getSharedPreferencesInstance() async {
-    setState(() async {
-      final pref = await SharedPreferences.getInstance();
+    final pref = await SharedPreferences.getInstance();
+    setState(() {
       _pseudo = pref.getString("pseudo");
       _login = pref.getBool("login")!;
     });

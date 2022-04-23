@@ -5,6 +5,7 @@ import 'package:to_do_list_app/edit_task.dart';
 
 import 'database_service.dart';
 import 'my_drawer.dart';
+import 'show_task.dart';
 import 'task.dart';
 
 class TaskList extends StatefulWidget {
@@ -56,9 +57,7 @@ class _TaskListState extends State<TaskList> {
               child: Column(
                 children: [
                   ListTile(
-                    leading: Icon(Icons.note_add),
-                    title: Text(_tasks[index].name),
-                    subtitle: Text(_tasks[index].description),
+                    title: Text(_tasks[index].name, style: TextStyle(fontWeight: FontWeight.bold),),
                       trailing: SizedBox(
                         width: 150,
                         child: Row(
@@ -66,10 +65,10 @@ class _TaskListState extends State<TaskList> {
                             IconButton(
                               icon: const Icon(Icons.remove_red_eye_outlined),
                               onPressed: (){
-                                /*Navigator.push(
+                                Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => ShowPerson(id: _journals[index]['id'])),
-                                );*/
+                                  MaterialPageRoute(builder: (context) => ShowTask(task: _tasks[index])),
+                                );
                               },
                             ),
                             IconButton(
